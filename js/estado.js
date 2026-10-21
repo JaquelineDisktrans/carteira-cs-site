@@ -94,10 +94,15 @@ export function salvar(colecao, valor) {
   ouvintes.forEach((fn) => fn(colecao, alterados));
 }
 
-/** Troca as coleções editáveis pelas que vieram da nuvem (sem disparar gravação). */
+/**
+ * Troca as coleções editáveis pelas que vieram da nuvem (sem disparar gravação).
+ * A nuvem é a fonte oficial: lista vazia lá = vazia aqui. Só a roteirização vazia
+ * é ignorada, porque sem ela nenhum cliente apareceria.
+ */
 export function aplicarDaNuvem(colecoes) {
   Object.entries(colecoes).forEach(([nome, lista]) => {
-    if (lista.length) pacote[nome] = lista;
+    if (nome === "roteirizacao" && !lista.length) return;
+    pacote[nome] = lista;
   });
 }
 
