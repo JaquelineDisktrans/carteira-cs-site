@@ -1,0 +1,12 @@
+/*
+  Ponto único de entrada do CSS: só importa os arquivos por responsabilidade.
+  Convenção de classes: BEM. Mobile-first. Sem !important e sem estilo por ID.
+*/
+
+@import url("variaveis.css");
+@import url("base.css");
+@import url("layout.css");
+@import url("componentes.css");
+@import url("telas.css");
+@import url("impressao.css");
+@import url("tema.css");

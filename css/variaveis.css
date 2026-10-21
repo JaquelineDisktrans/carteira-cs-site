@@ -1,0 +1,64 @@
+/*
+  Variáveis globais do projeto (Disktrans Design System).
+  Cores, tipografia e espaçamentos ficam só aqui.
+  Verde é reservado para ESG: não usar nas telas operacionais.
+*/
+
+:root {
+  /* Marca */
+  --cor-navy: #022064;
+  --cor-azul: #004c96;
+  --cor-azul-claro: #0a7ac9;
+  --cor-azul-suave: #e6f0fa;
+  --cor-azul-borda: #c2dcf1;
+  --cor-laranja: #f4941d;
+  --cor-laranja-suave: #fdebd3;
+  --cor-laranja-texto: #8a4b00;
+
+  /* Status */
+  --cor-atencao: #e0a21a;
+  --cor-atencao-suave: #fbefd2;
+  --cor-atencao-texto: #7a4300;
+  --cor-risco: #c8362b;
+  --cor-risco-suave: #f8e1df;
+  --cor-risco-texto: #9e2a21;
+
+  /* Neutros */
+  --cor-fundo: #f5f6f8;
+  --cor-superficie: #ffffff;
+  --cor-cinza-1: #e9ecf1;
+  --cor-cinza-2: #d6dae2;
+  --cor-cinza-3: #8a93a4;
+  --cor-texto: #3a3a4a;
+  --cor-texto-secundario: #6b7280;
+  --cor-texto-forte: #1b1f2a;
+
+  /* Faixas de aging (em dia → +30 d.u.) */
+  --aging-0: #004c96;
+  --aging-1: #fce3c0;
+  --aging-2: #f9c98a;
+  --aging-3: #f4941d;
+  --aging-4: #d9661a;
+  --aging-5: #c8362b;
+  --aging-6: #9e2a21;
+  --aging-7: #6e1d17;
+
+  /* Tipografia */
+  --fonte-titulo: "Barlow", system-ui, sans-serif;
+  --fonte-base: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --tamanho-fonte-base: 1rem;
+
+  /* Espaçamentos */
+  --espaco-xs: 0.25rem;
+  --espaco-sm: 0.5rem;
+  --espaco-md: 1rem;
+  --espaco-lg: 1.5rem;
+  --espaco-xl: 2.5rem;
+
+  /* Bordas e sombras */
+  --raio-sm: 0.375rem;
+  --raio-md: 0.5rem;
+  --raio-lg: 0.75rem;
+  --sombra-card: 0 6px 14px -4px rgba(2, 32, 100, 0.12), 0 2px 4px rgba(2, 32, 100, 0.06);
+  --sombra-leve: 0 1px 3px rgba(2, 32, 100, 0.08);
+}

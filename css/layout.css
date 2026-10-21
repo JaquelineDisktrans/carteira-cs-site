@@ -1,0 +1,163 @@
+/* Estrutura da página: menu lateral + conteúdo, tela de login. */
+
+.painel {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.menu {
+  flex: 1 1 14.5rem;
+  max-width: 100%;
+  background: var(--cor-navy);
+  color: #ffffff;
+  padding: 1.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.menu__logo {
+  width: 9.25rem;
+  height: auto;
+}
+
+.menu__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-xs);
+}
+
+.menu__rotulo {
+  font-family: var(--fonte-titulo);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cor-azul-borda);
+  padding: 0 0.75rem var(--espaco-sm);
+}
+
+.menu__link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border-radius: var(--raio-md);
+  color: #e6f0fa;
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+
+.menu__link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.menu__link--ativo {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.menu__icone {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+}
+
+.menu__usuario {
+  margin-top: auto;
+  padding: var(--espaco-md) 0.75rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-xs);
+}
+
+.menu__usuario-nome {
+  font-weight: 600;
+}
+
+.menu__usuario-papel {
+  font-size: 0.75rem;
+  color: var(--cor-azul-borda);
+}
+
+.menu__sair {
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #e6f0fa;
+  text-align: left;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.conteudo {
+  flex: 999 1 35rem;
+  min-width: 0;
+  padding: 1.75rem var(--espaco-md) 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-lg);
+}
+
+@media (min-width: 48rem) {
+  .conteudo {
+    padding: 1.75rem 2.5rem 3.5rem;
+  }
+}
+
+/* Login */
+.login {
+  min-height: 100vh;
+  background: var(--cor-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem var(--espaco-md);
+}
+
+.login__caixa {
+  width: 100%;
+  max-width: 26rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.login__logo {
+  width: 11.25rem;
+  height: auto;
+}
+
+.login__form {
+  width: 100%;
+  background: var(--cor-superficie);
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.35);
+}
+
+.login__form .campo {
+  flex: none;
+}
+
+.login__titulo {
+  font-size: 1.875rem;
+}
+
+.login__nota {
+  font-size: 0.75rem;
+  color: var(--cor-texto-secundario);
+}

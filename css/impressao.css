@@ -1,0 +1,84 @@
+/* Relatório em PDF (Imprimir → Salvar como PDF): só o bloco .impressao aparece. */
+
+.impressao {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .painel,
+  .login {
+    display: none;
+  }
+
+  .impressao {
+    display: flex;
+    flex-direction: column;
+    gap: 6mm;
+    font-size: 10pt;
+    color: var(--cor-texto);
+  }
+
+  .impressao__topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--cor-navy);
+    color: #ffffff;
+    padding: 5mm 6mm;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .impressao__topo h1 {
+    color: #ffffff;
+    font-size: 18pt;
+  }
+
+  .impressao__logo {
+    width: 32mm;
+  }
+
+  .impressao__indicadores {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3mm;
+  }
+
+  .impressao__indicador {
+    border: 1px solid var(--cor-cinza-2);
+    border-radius: 2mm;
+    padding: 3mm;
+  }
+
+  .impressao__valor {
+    font-family: var(--fonte-titulo);
+    font-size: 18pt;
+    font-weight: 800;
+    color: var(--cor-navy);
+  }
+
+  .impressao table {
+    font-size: 9pt;
+  }
+
+  .impressao th,
+  .impressao td {
+    border-bottom: 1px solid var(--cor-cinza-1);
+    padding: 1.5mm 2mm;
+    text-align: left;
+  }
+
+  .impressao__rodape {
+    font-size: 8pt;
+    color: var(--cor-texto-secundario);
+  }
+}

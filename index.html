@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Gestão de Carteira CS — Disktrans</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Tela de login: a senha da equipe destrava os dados criptografados -->
+  <section class="login" id="tela-login" aria-labelledby="titulo-login">
+    <div class="login__caixa">
+      <img class="login__logo" src="assets/img/logo-disktrans.svg" alt="Disktrans">
+      <form class="login__form" id="form-login" novalidate>
+        <div class="cabecalho-tela__titulos">
+          <span class="cabecalho-tela__sobretitulo">Customer Success</span>
+          <h1 class="login__titulo" id="titulo-login">Gestão de Carteira</h1>
+          <span class="cabecalho-tela__traco"></span>
+        </div>
+        <label class="campo" for="campo-senha">Senha da equipe
+          <input class="campo__entrada" type="password" id="campo-senha" autocomplete="current-password" required>
+        </label>
+        <p class="mensagem mensagem--erro" id="erro-login" role="alert" hidden></p>
+        <button class="botao botao--primario botao--bloco" type="submit" id="botao-entrar">Entrar</button>
+        <p class="login__nota">Os dados ficam criptografados no repositório. A senha destrava a leitura só neste navegador e não é enviada a nenhum servidor.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Painel: menu lateral montado por js/navegacao.js, telas por js/telas/*.js -->
+  <div class="painel" id="painel" hidden>
+    <nav class="menu" id="menu" aria-label="Menu principal"></nav>
+    <main class="conteudo" id="conteudo" tabindex="-1"></main>
+  </div>
+
+  <!-- Aviso de gravação das edições (nuvem ou modo local) -->
+  <p class="aviso-nuvem" id="aviso-nuvem" role="status" aria-live="polite" hidden></p>
+
+  <!-- Bloco usado só na impressão do fechamento em PDF -->
+  <section class="impressao" id="impressao" aria-hidden="true"></section>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
