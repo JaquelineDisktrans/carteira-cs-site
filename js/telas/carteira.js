@@ -79,7 +79,7 @@ export function renderizarCarteira(conteudo) {
           h("thead", {}, h("tr", {},
             h("th", { text: "Cliente · razão social · loja" }),
             h("th", { text: "CS responsável" }),
-            ...["Frota", "Receita/mês", "Trocas abertas", "Novos abertos", "N.S.", "Equip. em risco"].map((t) => h("th", { class: "tabela__num", text: t })))),
+            ...["Frota", "Trocas abertas", "Novos abertos", "N.S.", "Equip. em risco"].map((t) => h("th", { class: "tabela__num", text: t })))),
           corpoTabela)),
       h("p", { class: "card__nota card__nota--com-padding", text: "Clique em + para abrir o cliente por razão social (CNPJ raiz) e depois pelas lojas com algo em aberto. Entre parênteses: quantos estão atrasados. N.S. = equipamentos em aberto dentro do prazo ÷ total em aberto (troca + novo)." })));
 }
@@ -93,12 +93,12 @@ function blocoIndicadores(clientes) {
   return h("section", { class: "grade", "aria-label": "Indicadores da carteira" },
     indicador({ destaque: true, rotulo: "N.S. · nível de serviço em aberto", valor: ns === null ? "—" : f.percentual(ns), detalhe: `${f.numero(tn + nn - tl - nl)} de ${f.numero(tn + nn)} trocas e novos no prazo` }),
     indicador({
-      rotulo: "Valor da carteira", valor: f.dinheiro(somar(clientes, (c) => c.frota.receita)), unidade: "/mês",
+      rotulo: "Equipamentos na carteira", valor: f.numero(somar(clientes, (c) => c.frota.total)),
       detalhe: h("div", { class: "indicador__divisao" },
-        h("div", {}, h("div", { class: "rotulo", text: "Em troca" }), h("div", { class: "valor-forte", text: `${f.dinheiro(somar(clientes, (c) => c.abertos.troca.valor))}/mês` })),
-        h("div", {}, h("div", { class: "rotulo", text: "Em novo" }), h("div", { class: "valor-forte", text: `${f.dinheiro(somar(clientes, (c) => c.abertos.novo.valor))}/mês` }))),
+        h("div", {}, h("div", { class: "rotulo", text: "Em troca" }), h("div", { class: "valor-forte", text: f.numero(tn) })),
+        h("div", {}, h("div", { class: "rotulo", text: "Em novo" }), h("div", { class: "valor-forte", text: f.numero(nn) }))),
     }),
-    indicador({ rotulo: "Clientes acompanhados", valor: f.numero(clientes.length), detalhe: `${f.numero(somar(clientes, (c) => c.frota.total))} equipamentos locados` }),
+    indicador({ rotulo: "Clientes acompanhados", valor: f.numero(clientes.length), detalhe: `${f.numero(somar(clientes, (c) => c.lojasFrota))} lojas com frota` }),
     indicador({ rotulo: "Trocas em aberto", valor: f.numero(tn), detalhe: h("span", { class: "indicador__detalhe indicador__detalhe--risco", text: `${f.numero(tl)} atrasadas` }) }),
     indicador({ rotulo: "Novos em aberto", valor: f.numero(nn), detalhe: h("span", { class: "indicador__detalhe indicador__detalhe--risco", text: `${f.numero(nl)} atrasados` }) }),
     indicador({ rotulo: "Devoluções em aberto", valor: f.numero(somar(clientes, (c) => c.abertos.devol.n)), detalhe: `${f.numero(somar(clientes, (c) => c.abertos.devol.late))} atrasadas` }));
@@ -174,7 +174,7 @@ function montarLinhas(clientes, filtros, alternar) {
     const risco = emRisco(c);
     elementos.push(linha({
       nivel: 0, titulo: c.nome, subtitulo: `${c.cli} · ${c.lojasFrota} lojas com frota · ${c.ufs} UFs`, link: `#/cliente360?cli=${c.cli}`,
-      aberto, aoAlternar: () => alternar(c.cli), cs: c.resp, frota: c.frota.total, receita: c.frota.receita,
+      aberto, aoAlternar: () => alternar(c.cli), cs: c.resp, frota: c.frota.total,
       t: ab.troca.n, tl: ab.troca.late, n: ab.novo.n, nl: ab.novo.late, risco,
     }));
     if (!aberto) return;
@@ -184,15 +184,15 @@ function montarLinhas(clientes, filtros, alternar) {
       const empAberta = forcado || filtros.abertos.has(chave);
       elementos.push(linha({
         nivel: 1, titulo: e.nome, subtitulo: `Razão social · ${lojas.length} lojas com solicitação em aberto`,
-        aberto: empAberta, aoAlternar: () => alternar(chave), frota: e.frota, receita: e.receita, t: e.t, tl: e.tl, n: e.n, nl: e.nl,
+        aberto: empAberta, aoAlternar: () => alternar(chave), frota: e.frota, t: e.t, tl: e.tl, n: e.n, nl: e.nl,
       }));
       if (!empAberta) return;
       lojas.slice(0, LIMITE_LOJAS).forEach((l) => elementos.push(linha({
-        nivel: 2, titulo: l.nome, subtitulo: `Loja ${l.cod} · ${l.uf}`, frota: l.frota, receita: l.receita, t: l.t, tl: l.tl, n: l.n, nl: l.nl,
+        nivel: 2, titulo: l.nome, subtitulo: `Loja ${l.cod} · ${l.uf}`, frota: l.frota, t: l.t, tl: l.tl, n: l.n, nl: l.nl,
       })));
       if (lojas.length > LIMITE_LOJAS) {
         elementos.push(h("tr", { class: "tabela__linha--nivel-2" },
-          h("td", { colspan: 8 }, h("div", { class: "expansor", style: { "--recuo": "4.75rem" } },
+          h("td", { colspan: 7 }, h("div", { class: "expansor", style: { "--recuo": "4.75rem" } },
             h("span", { class: "texto-apagado", text: `+ ${lojas.length - LIMITE_LOJAS} lojas · use a busca para achar uma loja ou veja a lista completa no Cliente 360` })))));
       }
     });
@@ -200,7 +200,7 @@ function montarLinhas(clientes, filtros, alternar) {
   return { elementos, quantidade };
 }
 
-function linha({ nivel, titulo, subtitulo, link, aberto, aoAlternar, cs, frota, receita, t, tl, n, nl, risco }) {
+function linha({ nivel, titulo, subtitulo, link, aberto, aoAlternar, cs, frota, t, tl, n, nl, risco }) {
   const ns = nivelServicoAberto(t + n, tl + nl);
   const recuo = ["0rem", "2.25rem", "4.75rem"][nivel];
   const nomeEl = link
@@ -216,7 +216,6 @@ function linha({ nivel, titulo, subtitulo, link, aberto, aoAlternar, cs, frota, 
         h("div", { class: "expansor__textos" }, nomeEl, h("span", { class: "texto-pequeno texto-apagado", text: subtitulo })))),
     h("td", { class: "texto-pequeno", text: cs || "" }),
     h("td", { class: "tabela__num valor-forte", text: f.numero(frota) }),
-    h("td", { class: "tabela__num", text: f.dinheiro(receita) }),
     h("td", { class: "tabela__num valor-forte" }, f.numero(t), tl ? h("span", { class: "texto-pequeno texto-risco", text: ` (${tl})` }) : null),
     h("td", { class: "tabela__num valor-forte" }, f.numero(n), nl ? h("span", { class: "texto-pequeno texto-risco", text: ` (${nl})` }) : null),
     h("td", { class: `tabela__num ${ns !== null && ns < 0.8 ? "texto-risco" : "valor-forte"}`, text: ns === null ? "—" : f.percentual(ns) }),

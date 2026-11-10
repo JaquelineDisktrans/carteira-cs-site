@@ -62,7 +62,7 @@ function slideVisaoGeral(pptx, clientes, dados) {
   titulo(s, "Visão geral da carteira", `${clientes.length} clientes · extraído em ${dados.atualizado}`);
   cartoesKpi(s, [
     ["N.S. em aberto", tn ? f.percentual(1 - tl / tn) : "—", `${f.numero(tn - tl)} de ${f.numero(tn)} no prazo`, true],
-    ["Valor da carteira", f.dinheiro(somar(clientes, (c) => c.frota.receita)), "receita mensal esperada"],
+    ["Equipamentos na carteira", f.numero(somar(clientes, (c) => c.frota.total)), `${f.numero(somar(clientes, (c) => c.lojasFrota))} lojas com frota`],
     ["Trocas em aberto", f.numero(somar(clientes, (c) => c.abertos.troca.n)), `${f.numero(somar(clientes, (c) => c.abertos.troca.late))} atrasadas`],
     ["Novos em aberto", f.numero(somar(clientes, (c) => c.abertos.novo.n)), `${f.numero(somar(clientes, (c) => c.abertos.novo.late))} atrasados`],
     ["Equipamentos em risco", f.numero(somar(clientes, emRisco)), "5+ d.u. de atraso"],
@@ -80,11 +80,11 @@ function slideVisaoGeral(pptx, clientes, dados) {
 function slideClientes(pptx, clientes) {
   const s = pptx.addSlide({ masterName: "DISKTRANS" });
   titulo(s, "Clientes da carteira", "N.S. em aberto, atrasos e risco por cliente");
-  tabela(s, ["Cliente", "CS", "Frota", "Receita/mês", "Trocas (atras.)", "Novos (atras.)", "N.S.", "Em risco", "N.S. 90d"],
+  tabela(s, ["Cliente", "CS", "Frota", "Trocas (atras.)", "Novos (atras.)", "N.S.", "Em risco", "N.S. 90d"],
     clientes.map((c) => {
       const ns = nivelServicoCliente(c);
       const t = c.atual.todas;
-      return [c.nome, c.resp, f.numero(c.frota.total), f.dinheiro(c.frota.receita), `${f.numero(c.abertos.troca.n)} (${c.abertos.troca.late})`,
+      return [c.nome, c.resp, f.numero(c.frota.total), `${f.numero(c.abertos.troca.n)} (${c.abertos.troca.late})`,
         `${f.numero(c.abertos.novo.n)} (${c.abertos.novo.late})`, ns === null ? "—" : f.percentual(ns), f.numero(emRisco(c)), f.percentual(1 - t.late / Math.max(1, t.n))];
     }));
 }

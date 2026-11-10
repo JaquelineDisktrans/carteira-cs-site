@@ -60,7 +60,7 @@ function blocoResumo(c) {
 
   const mosaico = [
     ["Frota locada", f.numero(fr.total), partes.join(" · ")],
-    ["Receita mensal esperada", f.dinheiro(fr.receita), fr.acessorio ? `inclui ${fr.acessorio} baterias e carregadores` : "contratos ativos"],
+    ["Lojas com frota", f.numero(c.lojasFrota), `de ${f.numero(c.lojas)} cadastradas · ${c.ufs} UFs${fr.acessorio ? ` · + ${fr.acessorio} baterias e carregadores` : ""}`],
     ["N.S. em aberto", nsAberto === null ? "—" : f.percentual(nsAberto), `${f.numero(tn - tl)} de ${f.numero(tn)} trocas e novos no prazo`, nsAberto !== null && nsAberto < 0.8],
     ["Nível de serviço · 90 dias", f.percentual(ns90), `${ns90 >= ns90a ? "▲" : "▼"} vs. ${f.percentual(ns90a)} nos 90 anteriores`, ns90 < 0.7],
     ["Em aberto · todas as operações", f.numero(tn + ab.devol.n), `${f.numero(ab.troca.n)} trocas · ${f.numero(ab.novo.n)} novos · ${f.numero(ab.devol.n)} devoluções`],
